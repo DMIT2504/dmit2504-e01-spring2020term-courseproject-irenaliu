@@ -8,6 +8,8 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 
 import android.os.Build;
@@ -33,7 +35,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.location.LocationListener;
 
 import java.io.FileDescriptor;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
@@ -47,6 +51,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Location mLastLocation;
     private Marker mCurrentLocationMarker;
     public static final int REQUEST_LOCATION_CODE = 99;
+    public static final int PROXIMITY_RADIUS = 10000;
+    double latitude, longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +66,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+    }
+
+    private String getUrl(double latitude, double longitude, String nearbyPlace) {
+        //https://maps.googleapis.com/maps/api/place/nearbysearch/output?parameters
+        //can be json or xml
+        StringBuilder googlePlaceUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
+
+        //add parameters
+        googlePlaceUrl.append("location" + latitude + "," + longitude);
+        googlePlaceUrl.append("&radius="+ PROXIMITY_RADIUS);
+        googlePlaceUrl.append("&type"+ nearbyPlace);
+        googlePlaceUrl.append("&sensor=true");
+        googlePlaceUrl.append("&key="+"AIzaSyBEkp0HSHkcU8LoJWThZytEJS_mWbE8yfE");
+
+        return googlePlaceUrl.toString();
     }
 
     //handle permission request response
@@ -101,11 +122,38 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
+            if (getIntent() != null) {
+                String searchString = getIntent().getStringExtra("search");
+                List<Address> addressList = null;
+                MarkerOptions markerOptions = new MarkerOptions();
+                if (!searchString.equals("")) {
+//                Geocoder geocoder = new Geocoder(this);
+//                try {
+//                    addressList = geocoder.getFromLocationName(searchString, 5);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//
+//                for (int i = 0; i < addressList.size(); i++) {
+//                    Address anAddress = addressList.get(i);
+//                    LatLng latLng = new LatLng(anAddress.getLatitude(), anAddress.getLongitude());
+//                    markerOptions.position(latLng);
+//                    mMap.addMarker(markerOptions);
+//                    mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+//                }
+                    //search
+                    mMap.clear();
+                    String url = getUrl(latitude, longitude, searchString);
+                    Object dataTransfer[] = new Object[2];
+                    dataTransfer[0] = mMap;
+                    dataTransfer[1] = url;
+
+                    GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
+                    getNearbyPlacesData.execute(dataTransfer);
+                    Toast.makeText(getApplicationContext(), "Showing nearby restaurants", Toast.LENGTH_SHORT).show();
+                }
+            }
         }
-        // Add a marker in Sydney and move the camera
-//        LatLng sydney = new LatLng(-34, 151);
-//        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -134,8 +182,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mCurrentLocationMarker = mMap.addMarker(markerOptions);
         //move map
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomBy(10));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
+
 
         if(mGoogleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
