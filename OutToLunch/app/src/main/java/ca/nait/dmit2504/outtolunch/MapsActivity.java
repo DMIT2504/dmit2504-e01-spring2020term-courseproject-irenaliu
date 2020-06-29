@@ -51,7 +51,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Location mLastLocation;
     private Marker mCurrentLocationMarker;
     public static final int REQUEST_LOCATION_CODE = 99;
-    public static final int PROXIMITY_RADIUS = 10000;
+    public static final int PROXIMITY_RADIUS = 5000;
     double latitude, longitude;
 
     @Override
@@ -71,10 +71,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private String getUrl(double latitude, double longitude, String nearbyPlace) {
         //https://maps.googleapis.com/maps/api/place/nearbysearch/output?parameters
         //can be json or xml
-        StringBuilder googlePlaceUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
+        StringBuilder googlePlaceUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json");
 
         //add parameters
-        googlePlaceUrl.append("location" + latitude + "," + longitude);
+        googlePlaceUrl.append("?location" + latitude + "," + longitude);
         googlePlaceUrl.append("&radius="+ PROXIMITY_RADIUS);
         googlePlaceUrl.append("&type"+ nearbyPlace);
         googlePlaceUrl.append("&sensor=true");
