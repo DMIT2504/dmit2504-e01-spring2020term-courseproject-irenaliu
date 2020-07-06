@@ -14,6 +14,14 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:src="@drawable/selector"
+            android:layout_above="@+id/act_roulette_wheel_img"
+            android:layout_centerHorizontal="true"></ImageView>
+
+        <ImageView
+            android:id="@+id/act_roulette_wheel_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:src="@drawable/cuisine_wheel"
             android:adjustViewBounds="true"
             android:layout_centerHorizontal="true"
@@ -21,7 +29,7 @@
         </ImageView>
 
         <EditText
-            android:id="@+id/act_main_search_edit"
+            android:id="@+id/act_roulette_search_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
@@ -32,7 +40,7 @@
             android:inputType="textPersonName" />
 
         <Button
-            android:id="@+id/act_main_search_btn"
+            android:id="@+id/act_roulette_search_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
