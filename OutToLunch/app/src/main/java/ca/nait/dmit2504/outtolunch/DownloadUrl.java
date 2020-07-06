@@ -15,22 +15,28 @@ public class DownloadUrl {
         HttpURLConnection urlConnection = null;
 
         try {
+            //initialize url
             URL url = new URL(myUrl);
+            //initialize connection
             urlConnection = (HttpURLConnection) url.openConnection();
-            //connect
+            //connect connection
             urlConnection.connect();
 
-            //read data
+            //READ DATA
+            //initialize input stream
             inputStream = urlConnection.getInputStream();
+            //initialize buffer reader
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            StringBuffer stringBuffer = new StringBuffer();
-
-            String  currentLine = "";
-            while((currentLine = reader.readLine()) != null) {
-                stringBuffer.append(currentLine);
+            //initialize string builder
+            StringBuilder builder = new StringBuilder();
+            //initialize string variable
+            String  line = "";
+            while((line = reader.readLine()) != null) {
+                builder.append(line);
             }
-
-            data = stringBuffer.toString();
+            //get data
+            data = builder.toString();
+            //close reader
             reader.close();
         } catch (MalformedURLException e) {
             e.printStackTrace();

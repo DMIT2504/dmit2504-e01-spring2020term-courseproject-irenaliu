@@ -3,4 +3,5 @@
     <string name="title_activity_maps">Map</string>
     <string name="permission_denied">Permission denied</string>
     <string name="find_restaurants">Find Restaurants</string>
+    <string name="google_places_API_key">AIzaSyBEkp0HSHkcU8LoJWThZytEJS_mWbE8yfE</string>
 </resources>
