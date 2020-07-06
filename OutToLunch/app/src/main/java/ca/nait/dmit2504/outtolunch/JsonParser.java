@@ -13,7 +13,10 @@ public class JsonParser {
         //initialize hash map
         HashMap<String, String> dataList = new HashMap<>();
         String name = "-NA-";
-        String vicinity = "-NA-";
+        String price_level = "-NA-";
+        String rating = "-NA-";
+        String user_ratings_total = "-NA-";
+        String open_now = "";
         String latitude = "";
         String longitude = "";
         String reference = "";
@@ -23,8 +26,11 @@ public class JsonParser {
                 //get name from object
                 name = jsonObject.getString("name");
             }
-            if(!jsonObject.isNull("vicinity")) {
-                vicinity = jsonObject.getString("vicinity");
+            if(!jsonObject.isNull("price_level")) {
+                price_level = jsonObject.getString("price_level").equals("1") ? price_level = "$"
+                                        : jsonObject.getString("price_level").equals("2") ? price_level = "$$"
+                                        : jsonObject.getString("price_level").equals("3") ? price_level = "$$$"
+                                        : "$$$$";
             }
             //get latitude & longitude
             latitude = jsonObject.getJSONObject("geometry")
@@ -35,7 +41,7 @@ public class JsonParser {
             reference = jsonObject.getString("reference");
 
             dataList.put("name", name);
-            dataList.put("vicinity", vicinity);
+            dataList.put("price_level", price_level);
             dataList.put("lat", latitude);
             dataList.put("lng", longitude);
             dataList.put("reference", reference);

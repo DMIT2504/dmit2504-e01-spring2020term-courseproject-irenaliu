@@ -49,15 +49,15 @@ public class NearbyPlacesTask extends AsyncTask<Object, String, String> {
             HashMap<String, String> googlePlace = nearbyPlaceList.get(i);
 
             String placeName = googlePlace.get("name");
-            String vicinity = googlePlace.get("vicinity");
+            String priceLevel = googlePlace.get("price_level");
             double lat = Double.parseDouble(googlePlace.get("lat"));
             double lng = Double.parseDouble(googlePlace.get("lng"));
             LatLng latLng = new LatLng(lat, lng);
 
             //set position and title
             markerOptions.position(latLng);
-            markerOptions.title(placeName + " : " + vicinity);
-            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+            markerOptions.title(placeName + " : " + priceLevel);
+            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
 
             mMap.addMarker(markerOptions);
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
