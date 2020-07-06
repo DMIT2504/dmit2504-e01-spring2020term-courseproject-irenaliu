@@ -3,20 +3,11 @@ package ca.nait.dmit2504.outtolunch;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-
-import java.io.IOException;
-import java.util.List;
-
-public class MainActivity extends AppCompatActivity {
+public class CuisineRouletteActivity extends AppCompatActivity {
 
     private EditText mSearchEdit;
     private Button mFindBtn;
@@ -24,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_cuisine_roulette);
 
         mSearchEdit = findViewById(R.id.act_main_search_edit);
         mFindBtn = findViewById(R.id.act_main_search_btn);
