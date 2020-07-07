@@ -59,8 +59,8 @@ public class NearbyPlacesTask extends AsyncTask<Object, String, String> {
 
             //set position and title
             markerOptions.position(latLng);
-            markerOptions.title(placeName + " : " + priceLevel);
-            String snippet = rating + " " + userRatingTotal + "\n" + openNow;
+            markerOptions.title(placeName + " " + priceLevel);
+            String snippet = "Rated: " + rating + "/5 out of " + userRatingTotal + " ratings" + "\n" + (openNow == "true" ? "OPEN" : "CLOSED");
             markerOptions.snippet(snippet);
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
 

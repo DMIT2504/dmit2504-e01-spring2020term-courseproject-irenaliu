@@ -140,6 +140,8 @@ public class MapsActivity extends FragmentActivity implements
         Log.d(TAG, "moveCamera: moving the camera to: lat: " + latlng.latitude + ", lng: " + latlng.longitude);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, zoom));
 
+        mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter(this));
+
         if(!title.equals("My Location")) {
             MarkerOptions markerOptions = new MarkerOptions()
                     .position(latlng)
