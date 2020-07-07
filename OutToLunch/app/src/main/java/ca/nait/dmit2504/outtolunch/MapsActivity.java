@@ -101,7 +101,7 @@ public class MapsActivity extends FragmentActivity implements
                     dataTransfer[0] = mMap;
                     dataTransfer[1] = url;
                     getNearbyPlacesData.execute(dataTransfer);
-                    Toast.makeText(getApplicationContext(), "Showing nearby restaurants", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Showing nearby open restaurants", Toast.LENGTH_SHORT).show();
                 }
             }
 
