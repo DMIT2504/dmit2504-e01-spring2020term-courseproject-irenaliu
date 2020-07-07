@@ -9,7 +9,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1.0">
 
         <TextView
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/act_roulette_wheel_img"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/selector"></ImageView>
+            android:src="@drawable/selector" />
 
         <ImageView
             android:id="@+id/act_roulette_wheel_img"
@@ -39,7 +39,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:adjustViewBounds="true"
-            android:src="@drawable/cuisine_wheel"></ImageView>
+            android:src="@drawable/cuisine_wheel" />
 
         <TextView
             android:id="@+id/act_roulette_cuisine_txt"

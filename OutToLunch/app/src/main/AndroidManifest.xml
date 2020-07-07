@@ -19,6 +19,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -37,8 +40,7 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps"
-            android:parentActivityName=".CuisineRouletteActivity">
-        </activity>
+            android:parentActivityName=".CuisineRouletteActivity"></activity>
         <activity android:name=".CuisineRouletteActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

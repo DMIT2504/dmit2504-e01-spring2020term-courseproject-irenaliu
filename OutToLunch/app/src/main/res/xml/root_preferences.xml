@@ -1,0 +1,20 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory app:title="@string/general_header">
+        <EditTextPreference
+            android:foregroundTint="#FFFFFF"
+            android:key="lat_pref"
+            android:selectable="true"
+            android:singleLineTitle="true"
+            android:title="@string/latitude" />
+        <EditTextPreference
+            android:foregroundTint="#FFFFFF"
+            android:key="lng_pref"
+            android:selectable="true"
+            android:singleLineTitle="true"
+            android:title="@string/longitude" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

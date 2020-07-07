@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
+import androidx.preference.PreferenceManager;
 
 import android.Manifest;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Location;
@@ -44,6 +46,10 @@ public class MapsActivity extends FragmentActivity implements
 
     //logger
     private static final String TAG = MapsActivity.class.getSimpleName();
+
+    //pref keys
+    private static final String LAT_PREF_KEY = "lat_pref";
+    private static final String LNG_PREF_KEY = "lng_pref";
 
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient; //maybe not required
@@ -83,7 +89,11 @@ public class MapsActivity extends FragmentActivity implements
                 if (!searchString.equals("")) {
                     //search
                     mMap.clear();
-                    String url = getUrl(mLat, mLng, searchString); //need to get latitude and longitude
+                    //get lat + lng from prefs
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                    mLat = Double.parseDouble(prefs.getString(LAT_PREF_KEY, "0.00"));
+                    mLng = Double.parseDouble(prefs.getString(LNG_PREF_KEY, "0.00"));
+                    String url = getUrl(mLat, mLng, searchString);
                     Object dataTransfer[] = new Object[2];
                     dataTransfer[0] = mMap;
                     dataTransfer[1] = url;
@@ -155,7 +165,7 @@ public class MapsActivity extends FragmentActivity implements
         //add parameters
         //sample lat & lng = 53.4604314, -113.56062109999999
         googlePlaceUrl.append("query=" + restaurantType);
-        googlePlaceUrl.append("&location=" + 53.4604314 + "," + -113.56062109999999);
+        googlePlaceUrl.append("&location=" + latitude + "," + longitude);
         googlePlaceUrl.append("&radius=" + PROXIMITY_RADIUS);
         googlePlaceUrl.append("&type=restaurant+food");
         googlePlaceUrl.append("&sensor=true");
@@ -180,6 +190,7 @@ public class MapsActivity extends FragmentActivity implements
                             if (mGoogleApiClient == null) {
                                 buildGoogleApiClient();
                             }
+                            //blue dot for current GPS location
                             mMap.setMyLocationEnabled(true);
                         }
                     }
@@ -195,6 +206,9 @@ public class MapsActivity extends FragmentActivity implements
         Log.d(TAG, "GetDeviceLocation: getting the devices current location");
         //initialize fused location provider client
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        //store latitude + longitude in prefs
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = prefs.edit();
 
         try {
             if (mLocationPermissionsGranted) {
@@ -203,6 +217,9 @@ public class MapsActivity extends FragmentActivity implements
                     if (locationTask.isSuccessful()) {
                         Log.d(TAG, "onComplete: found location");
                         Location currentLocation = (Location) locationTask.getResult();
+                        editor.putString(LAT_PREF_KEY, String.valueOf(currentLocation.getLatitude()));
+                        editor.putString(LNG_PREF_KEY, String.valueOf(currentLocation.getLongitude()));
+                        editor.commit();
                         moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),
                                 DEFAULT_ZOOM,
                                 "Current Location");
@@ -257,16 +274,6 @@ public class MapsActivity extends FragmentActivity implements
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-        }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        //stop location updates when Activity is no longer active
-        if (mFusedLocationProviderClient != null) {
-            mFusedLocationProviderClient.removeLocationUpdates(mLocationCallback);
         }
     }
 
