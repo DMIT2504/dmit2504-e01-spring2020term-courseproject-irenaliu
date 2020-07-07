@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     android:orientation="vertical"
     tools:context=".CuisineRouletteActivity">
 
@@ -15,9 +16,9 @@
             android:id="@+id/act_roulette_start_txt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_above="@+id/act_roulette_selected_img"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:layout_above="@+id/act_roulette_selected_img"
             android:text="@string/click_wheel_to_begin"
             android:textAlignment="center"
             android:textColor="#000000"
@@ -27,19 +28,18 @@
             android:id="@+id/act_roulette_selected_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/selector"
             android:layout_above="@+id/act_roulette_wheel_img"
-            android:layout_centerHorizontal="true"></ImageView>
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/selector"></ImageView>
 
         <ImageView
             android:id="@+id/act_roulette_wheel_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/cuisine_wheel"
-            android:adjustViewBounds="true"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true">
-        </ImageView>
+            android:layout_centerVertical="true"
+            android:adjustViewBounds="true"
+            android:src="@drawable/cuisine_wheel"></ImageView>
 
         <TextView
             android:id="@+id/act_roulette_cuisine_txt"
@@ -57,9 +57,15 @@
             android:id="@+id/act_roulette_search_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
             android:layout_marginBottom="32dp"
-            android:text="@string/find_restaurants" />
+            android:background="#FFFFFF"
+            android:backgroundTint="#ff534a"
+            android:padding="8dp"
+            android:text="@string/find_restaurants"
+            android:textStyle="bold"
+            android:textColor="#ffffff"
+            android:textSize="18sp" />
     </RelativeLayout>
 </LinearLayout>

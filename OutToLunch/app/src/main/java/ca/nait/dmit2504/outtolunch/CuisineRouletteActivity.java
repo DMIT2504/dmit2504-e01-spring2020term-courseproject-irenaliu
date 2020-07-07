@@ -88,7 +88,7 @@ public class CuisineRouletteActivity extends AppCompatActivity implements Animat
 
     @Override
     public void onAnimationEnd(Animation animation) {
-        selectedCuisine = currentCuisine(360 - (mDegrees % 360));
+        selectedCuisine = getSelectedCuisine(360 - (mDegrees % 360));
         mCuisineTxt.setText(selectedCuisine);
         mBtnRotation = true;
     }
@@ -98,7 +98,7 @@ public class CuisineRouletteActivity extends AppCompatActivity implements Animat
 
     }
 
-    private String currentCuisine(int degrees) {
+    private String getSelectedCuisine(int degrees) {
         String cuisine = "Chinese";
         if (degrees >= (FACTOR * 1) && degrees < (FACTOR * 3)) {
             cuisine = "Italian";

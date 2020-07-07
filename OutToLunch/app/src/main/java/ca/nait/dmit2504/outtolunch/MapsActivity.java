@@ -53,7 +53,7 @@ public class MapsActivity extends FragmentActivity implements
     private Location mLastLocation;
     private Marker mCurrentLocationMarker;
     private FusedLocationProviderClient mFusedLocationProviderClient;
-    private static final float DEFAULT_ZOOM = 15;
+    private static final float DEFAULT_ZOOM = 12;
     public static final int REQUEST_LOCATION_CODE = 99;
     public static final int PROXIMITY_RADIUS = 500;
     private double mLat = 0.0, mLng = 0.0;
@@ -145,7 +145,12 @@ public class MapsActivity extends FragmentActivity implements
         //https://maps.googleapis.com/maps/api/place/textsearch/output?parameters
         //can be json or xml
         StringBuilder googlePlaceUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/textsearch/json?");
-        String restaurantType = cuisine + "restaurant";
+        String restaurantType = "";
+        if (cuisine.equals("American")) {
+            restaurantType = "pizza+burgers+fries+restaurant";
+        } else {
+            restaurantType = cuisine + "+restaurant";
+        }
 
         //add parameters
         //sample lat & lng = 53.4604314, -113.56062109999999
@@ -250,9 +255,9 @@ public class MapsActivity extends FragmentActivity implements
         mLocationRequest.setFastestInterval(1100);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
-//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-//            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-//        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+        }
     }
 
     @Override

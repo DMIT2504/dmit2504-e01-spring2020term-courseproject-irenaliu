@@ -60,7 +60,7 @@ public class NearbyPlacesTask extends AsyncTask<Object, String, String> {
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
 
             mMap.addMarker(markerOptions);
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
-        }
+            //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+    }
     }
 }
