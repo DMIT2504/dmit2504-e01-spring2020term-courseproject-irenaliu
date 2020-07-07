@@ -6,10 +6,21 @@
 This document outlines a general guideline for how to set up a project to use Google's Place Search using the Google Places API. The Place Search will return a list of places based on a user's location or search string.
 
 ----------------------------------------------
-## Setting Up/ Getting Started
+## Overview
+
+1. Setting Up Project/ Getting Started
+2. Create a Map Fragment
+3. Check Mapping Permissions
+4. Set Up Device Location / Get Current Location
+5. Construct the Request URL
+6. 
+Official Documentation / Helpful Videos
+
+----------------------------------------------
+## Setting Up Project/ Getting Started
 
 ### Step 1) Create a new Android Studio project
-Create an empty Activity as well as a MapsActivity.
+Create an Empty Activity. If you choose to create a Maps Activity, the steps will be a bit different.
 
 ### Step 2) Import Google-play-services SDK
 Click on Tools > SDK Manager, then click on the SDK Tools tab. Make sure "Google Play services" is installed.
@@ -48,13 +59,13 @@ Next, we are going to create the two API keys. Click on "Credentials" in the lef
 
 ![Create Google Credential](/Pictures-For-Notes/create-credential.jpg)
 
-Copy the API key, and for best practices, you should restrict your API key to the API it will be used for to make it secure. This one  will be for Google Maps.
+Copy the API key, and for best practices, you should restrict your API key to the API it will be used for to make it secure. This one  will be for Google Maps. Save this key as a string resource in the **strings.xml** file.
 
-Paste the copied key in the **google_maps_api.xml** resource file in your android project.
-
-Create another key for Google Places. Restrict the key and save this key as a string resource too but in the regular **strings.xml** file.
+Create another key for Google Places. Restrict the key and save this key as a string resource too.
 
 ![Save API key as String Resource](Pictures-For-Notes/saved-key.jpg)
+
+*Note: If you have a MapsActivity, paste the Google Maps key into the **google_maps_api.xml** resource file created in your android project.*
 
 ### Step 4) Add uses-permissions & the Google Maps API key to AndroidManifest.xml
 Insert the following code snippet in the AndroidManifest.xml as a child of the `<application>` element.
@@ -73,21 +84,30 @@ Add the following 5 uses-permissions right before the start tag of `<application
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
 ```
+## Create a Map Fragment
+Create a map fragment in the layout file. This fragment is the simplest way to place a map in an application.
 
-## Check for Mapping Permissions
+```java
+<fragment
+    android:name="com.google.android.gms.maps.MapFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"/>
+```
+
+## Check Mapping Permissions
 
 ## Set up Device Location / Get Current Location
 
 ## Construct the Request Url
+    **3 Options for Request Urls:**
+    Data can be outputted as JSON or xml
+
     https://maps.googleapis.com/maps/api/place/findplacefromtext/output?parameters
     
     https://maps.googleapis.com/maps/api/place/nearbysearch/output?parameters
-    
-    OR
 
     https://maps.googleapis.com/maps/api/place/textsearch/output?parameters
 
-    Can be outputted as json or xml
 
 Required parameters & Optional parameters
 
@@ -102,4 +122,9 @@ Required parameters & Optional parameters
 
 [Getting Started with Google Maps Platform](https://developers.google.com/maps/gmp-get-started)
 
+[MapFragments](https://developers.google.com/android/reference/com/google/android/gms/maps/MapFragment)
+
 [Place Search Request Urls](https://developers.google.com/places/web-service/search)
+
+[YouTube: How to Find Nearby Places on Map in Android Studio](https://youtu.be/pjFcJ6EB8Dg)
+
