@@ -37,7 +37,7 @@
             android:layout_marginRight="16dp"
             android:ems="10"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="100dp"
+            android:layout_marginBottom="90dp"
             android:inputType="textPersonName" />
 
         <Button

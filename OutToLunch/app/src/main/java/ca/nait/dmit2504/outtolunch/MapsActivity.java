@@ -145,7 +145,6 @@ public class MapsActivity extends FragmentActivity implements
         //https://maps.googleapis.com/maps/api/place/textsearch/output?parameters
         //can be json or xml
         StringBuilder googlePlaceUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/textsearch/json?");
-        cuisine = "japanese";
         String restaurantType = cuisine + "restaurant";
 
         //add parameters

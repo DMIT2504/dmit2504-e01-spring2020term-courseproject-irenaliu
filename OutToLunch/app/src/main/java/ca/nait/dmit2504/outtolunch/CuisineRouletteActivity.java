@@ -22,8 +22,10 @@ public class CuisineRouletteActivity extends AppCompatActivity implements Animat
     private boolean mBtnRotation = true;
     private int mNum = 7;
     private long mDegrees = 0;
+    private static final String[] mCuisines = {"Chinese", "Vegetarian", "Indian", "Japanese", "Viet", "American", "Italian"};
 
-    ImageView mSelectedImgView, mWheelImgView;
+
+    private ImageView mWheelImgView;
 
 
     @Override
@@ -35,10 +37,10 @@ public class CuisineRouletteActivity extends AppCompatActivity implements Animat
 
         mSearchEdit = findViewById(R.id.act_roulette_search_edit);
         mFindBtn = findViewById(R.id.act_roulette_search_btn);
-        mSelectedImgView = findViewById(R.id.act_roulette_selected_img);
         mWheelImgView = findViewById(R.id.act_roulette_wheel_img);
 
         mWheelImgView.setOnClickListener(v -> {
+            //create random instance
             int random = new Random().nextInt(360) + 3600;
             RotateAnimation rotateAnimation = new RotateAnimation((float) mDegrees, (float) (mDegrees + ((long) random)),1, 0.5f, 1, 0.5f);
             mDegrees = mDegrees + (long)random % 360;
@@ -68,10 +70,11 @@ public class CuisineRouletteActivity extends AppCompatActivity implements Animat
 
     @Override
     public void onAnimationEnd(Animation animation) {
-//        String selectedCuisine = String.valueOf( (int) (double)mNum) - Math.floor((double)mDegrees) / (360.0d / ((double)mNum);
-//        Toast toast = Toast.makeText(this, selectedCuisine, Toast.LENGTH_SHORT);
-//        toast.setGravity(49, 0,0);
-//        toast.show();
+        int selected = ((int)(((double)mNum) - Math.floor(((double)mDegrees) / (360.0d / ((double)mNum)))));
+
+        Toast toast = Toast.makeText(this, String.valueOf(selected), Toast.LENGTH_SHORT);
+        toast.setGravity(49, 0,0);
+        toast.show();
         mBtnRotation = true;
     }
 
