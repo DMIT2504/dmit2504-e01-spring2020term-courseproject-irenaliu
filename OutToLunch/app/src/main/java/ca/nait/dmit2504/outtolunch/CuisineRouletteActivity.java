@@ -1,9 +1,15 @@
 package ca.nait.dmit2504.outtolunch;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
@@ -17,6 +23,11 @@ import android.widget.Toast;
 import java.util.Random;
 
 public class CuisineRouletteActivity extends AppCompatActivity implements Animation.AnimationListener {
+
+    //logger
+    private static final String TAG = CuisineRouletteActivity.class.getSimpleName();
+
+    public static final int REQUEST_LOCATION_CODE = 99;
 
     private TextView mCuisineTxt, mStartTxt;
     private Button mFindBtn;
@@ -40,6 +51,11 @@ public class CuisineRouletteActivity extends AppCompatActivity implements Animat
         requestWindowFeature(1);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cuisine_roulette);
+
+        //check permission
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getLocationPermission();
+        }
 
         mStartTxt = findViewById(R.id.act_roulette_start_txt);
         mCuisineTxt = findViewById(R.id.act_roulette_cuisine_txt);
@@ -123,5 +139,21 @@ public class CuisineRouletteActivity extends AppCompatActivity implements Animat
             cuisine = "Vegetarian";
         }
         return cuisine;
+    }
+
+    public void getLocationPermission() {
+        Log.d(TAG, "getLocationPermission: getting location permissions");
+        String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+            } else {
+                //ask for permissions
+                ActivityCompat.requestPermissions(this, permissions, REQUEST_LOCATION_CODE);
+            }
+        } else {
+            ActivityCompat.requestPermissions(this, permissions, REQUEST_LOCATION_CODE);
+        }
     }
 }

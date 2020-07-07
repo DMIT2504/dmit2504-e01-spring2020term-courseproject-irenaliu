@@ -52,13 +52,14 @@ public class MapsActivity extends FragmentActivity implements
     private static final String LNG_PREF_KEY = "lng_pref";
 
     private GoogleMap mMap;
-    private GoogleApiClient mGoogleApiClient; //maybe not required
+    private GoogleApiClient mGoogleApiClient;
     private boolean mLocationPermissionsGranted = false;
     private LocationRequest mLocationRequest;
     private LocationCallback mLocationCallback;
     private Location mLastLocation;
     private Marker mCurrentLocationMarker;
     private FusedLocationProviderClient mFusedLocationProviderClient;
+
     private static final float DEFAULT_ZOOM = 12;
     public static final int REQUEST_LOCATION_CODE = 99;
     public static final int PROXIMITY_RADIUS = 500;

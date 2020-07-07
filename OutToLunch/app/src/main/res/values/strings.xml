@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">OutToLunch</string>
     <string name="title_activity_maps">Map</string>
-    <string name="permission_denied">Permission denied</string>
+    <string name="permission_denied">Permissions denied. The app will run on limited functionality.</string>
     <string name="find_restaurants">🍴 I\'m hungry! 🍴</string>
     <string name="google_places_key">AIzaSyBEkp0HSHkcU8LoJWThZytEJS_mWbE8yfE</string>
     <string name="click_wheel_to_begin">Click the wheel to begin..</string>
