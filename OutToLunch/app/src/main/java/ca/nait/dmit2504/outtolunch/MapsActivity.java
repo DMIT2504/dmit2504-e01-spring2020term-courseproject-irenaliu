@@ -78,6 +78,8 @@ public class MapsActivity extends FragmentActivity implements
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        //set adapter for custom info window
+        mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter(this));
 
         if (mLocationPermissionsGranted) {
             getDeviceLocation();
@@ -140,12 +142,11 @@ public class MapsActivity extends FragmentActivity implements
         Log.d(TAG, "moveCamera: moving the camera to: lat: " + latlng.latitude + ", lng: " + latlng.longitude);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, zoom));
 
-        mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter(this));
-
         if(!title.equals("My Location")) {
             MarkerOptions markerOptions = new MarkerOptions()
                     .position(latlng)
                     .title(title)
+                    .snippet("")
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
             mMap.addMarker(markerOptions);
         }
@@ -219,6 +220,7 @@ public class MapsActivity extends FragmentActivity implements
                     if (locationTask.isSuccessful()) {
                         Log.d(TAG, "onComplete: found location");
                         Location currentLocation = (Location) locationTask.getResult();
+                        //storing coordinates here
                         editor.putString(LAT_PREF_KEY, String.valueOf(currentLocation.getLatitude()));
                         editor.putString(LNG_PREF_KEY, String.valueOf(currentLocation.getLongitude()));
                         editor.commit();
