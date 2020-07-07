@@ -98,9 +98,6 @@ Required parameters & Optional parameters
 - Something here
 
 ## Official Documentation & Other Helpful Videos
-Intro to Google Places
-https://developers.google.com/places/web-service/intro
-Getting Started with Google Maps Platform
-https://developers.google.com/maps/gmp-get-started
-Place Search Request Urls
-https://developers.google.com/places/web-service/search
+Intro to Google Places - https://developers.google.com/places/web-service/intro
+Getting Started with Google Maps Platform - https://developers.google.com/maps/gmp-get-started
+Place Search Request Urls - https://developers.google.com/places/web-service/search
