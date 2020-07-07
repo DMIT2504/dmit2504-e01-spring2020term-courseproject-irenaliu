@@ -144,7 +144,7 @@ public class MapsActivity extends FragmentActivity implements
             MarkerOptions markerOptions = new MarkerOptions()
                     .position(latlng)
                     .title(title)
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
             mMap.addMarker(markerOptions);
         }
     }

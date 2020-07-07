@@ -50,6 +50,9 @@ public class NearbyPlacesTask extends AsyncTask<Object, String, String> {
 
             String placeName = googlePlace.get("name");
             String priceLevel = googlePlace.get("price_level");
+            String rating = googlePlace.get("rating");
+            String userRatingTotal = googlePlace.get("user_ratings_total");
+            String openNow = googlePlace.get("open_now");
             double lat = Double.parseDouble(googlePlace.get("lat"));
             double lng = Double.parseDouble(googlePlace.get("lng"));
             LatLng latLng = new LatLng(lat, lng);
@@ -57,10 +60,11 @@ public class NearbyPlacesTask extends AsyncTask<Object, String, String> {
             //set position and title
             markerOptions.position(latLng);
             markerOptions.title(placeName + " : " + priceLevel);
+            String snippet = rating + " " + userRatingTotal + "\n" + openNow;
+            markerOptions.snippet(snippet);
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
 
             mMap.addMarker(markerOptions);
-            //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
     }
     }
 }

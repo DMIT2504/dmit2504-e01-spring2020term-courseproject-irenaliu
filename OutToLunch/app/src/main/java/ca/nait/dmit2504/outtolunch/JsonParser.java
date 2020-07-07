@@ -28,10 +28,19 @@ public class JsonParser {
             }
             if(!jsonObject.isNull("price_level")) {
                 price_level = jsonObject.getString("price_level").equals("1") ? price_level = "$"
-                                        : jsonObject.getString("price_level").equals("2") ? price_level = "$$"
-                                        : jsonObject.getString("price_level").equals("3") ? price_level = "$$$"
-                                        : "$$$$";
+                        : jsonObject.getString("price_level").equals("2") ? price_level = "$$"
+                        : jsonObject.getString("price_level").equals("3") ? price_level = "$$$"
+                        : "$$$$";
             }
+            if (!jsonObject.isNull("rating")) {
+                rating = jsonObject.getString("rating");
+            }
+            if (!jsonObject.isNull("user_ratings_total")) {
+                user_ratings_total = jsonObject.getString("user_ratings_total");
+            }
+            open_now = jsonObject.getJSONObject("opening_hours")
+                    .getString("open_now");
+
             //get latitude & longitude
             latitude = jsonObject.getJSONObject("geometry")
                     .getJSONObject("location").getString("lat");
@@ -40,12 +49,17 @@ public class JsonParser {
 
             reference = jsonObject.getString("reference");
 
-            dataList.put("name", name);
-            dataList.put("price_level", price_level);
-            dataList.put("lat", latitude);
-            dataList.put("lng", longitude);
-            dataList.put("reference", reference);
-
+            //check if open now
+            if (!open_now.equals("false")) {
+                dataList.put("name", name);
+                dataList.put("price_level", price_level);
+                dataList.put("rating", rating);
+                dataList.put("user_ratings_total", user_ratings_total);
+                dataList.put("open_now", open_now);
+                dataList.put("lat", latitude);
+                dataList.put("lng", longitude);
+                dataList.put("reference", reference);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -62,7 +76,9 @@ public class JsonParser {
                 HashMap<String, String> data = null;
                 data = parseJsonObject((JSONObject) jsonArray.get(i));
                 //add data to hash map list
-                dataList.add(data);
+                if (data.size() != 0) {
+                    dataList.add(data);
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
