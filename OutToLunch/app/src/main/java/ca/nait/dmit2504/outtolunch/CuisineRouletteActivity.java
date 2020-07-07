@@ -21,7 +21,6 @@ public class CuisineRouletteActivity extends AppCompatActivity implements Animat
     private TextView mCuisineTxt, mStartTxt;
     private Button mFindBtn;
     private boolean mBtnRotation = true;
-    private int mNum = 7;
     private int mDegrees = 0, mDegreesOld = 0;
     private Random mRandom;
     //7 sectors on the wheel = 51.42857 degrees each
@@ -52,13 +51,18 @@ public class CuisineRouletteActivity extends AppCompatActivity implements Animat
             mRandom = new Random();
             mDegreesOld = mDegrees % 360;
             mDegrees = mRandom.nextInt(360) + 3600;
-            RotateAnimation rotateAnimation = new RotateAnimation(mDegreesOld, mDegrees,RotateAnimation.RELATIVE_TO_SELF, 0.5f, RotateAnimation.RELATIVE_TO_SELF, 0.5f);
 
+            //create animation
+            RotateAnimation rotateAnimation = new RotateAnimation(mDegreesOld, mDegrees,RotateAnimation.RELATIVE_TO_SELF, 0.5f, RotateAnimation.RELATIVE_TO_SELF, 0.5f);
             rotateAnimation.setDuration(3600);
             rotateAnimation.setFillAfter(true);
             rotateAnimation.setInterpolator(new DecelerateInterpolator());
+
+            //set animation listener & animation
             rotateAnimation.setAnimationListener(this);
             mWheelImgView.setAnimation(rotateAnimation);
+
+            //begin animation
             mWheelImgView.startAnimation(rotateAnimation);
         });
 
