@@ -4,4 +4,6 @@
     <string name="permission_denied">Permission denied</string>
     <string name="find_restaurants">Find Restaurants</string>
     <string name="google_places_key">AIzaSyBEkp0HSHkcU8LoJWThZytEJS_mWbE8yfE</string>
+    <string name="click_wheel_to_begin">Click the wheel to begin..</string>
+    <string name="please_spin_the_wheel">Spin the wheel first to pick a cuisine</string>
 </resources>

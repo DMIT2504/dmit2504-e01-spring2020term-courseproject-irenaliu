@@ -3,21 +3,22 @@ package ca.nait.dmit2504.outtolunch;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Random;
 
 public class CuisineRouletteActivity extends AppCompatActivity implements Animation.AnimationListener {
 
-    private EditText mSearchEdit;
+    private TextView mCuisineTxt, mStartTxt;
     private Button mFindBtn;
     private boolean mBtnRotation = true;
     private int mNum = 7;
@@ -41,7 +42,8 @@ public class CuisineRouletteActivity extends AppCompatActivity implements Animat
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cuisine_roulette);
 
-        mSearchEdit = findViewById(R.id.act_roulette_search_edit);
+        mStartTxt = findViewById(R.id.act_roulette_start_txt);
+        mCuisineTxt = findViewById(R.id.act_roulette_cuisine_txt);
         mFindBtn = findViewById(R.id.act_roulette_search_btn);
         mWheelImgView = findViewById(R.id.act_roulette_wheel_img);
 
@@ -61,27 +63,33 @@ public class CuisineRouletteActivity extends AppCompatActivity implements Animat
         });
 
         mFindBtn.setOnClickListener(v -> {
-            String searchString = mSearchEdit.getText().toString();
+            String searchString = mCuisineTxt.getText().toString();
 
             if(!searchString.equals("")) {
                 Intent mapIntent = new Intent(this, MapsActivity.class);
                 mapIntent.putExtra("search", searchString);
                 startActivity(mapIntent);
+            } else {
+                Toast toast = Toast.makeText(this, R.string.please_spin_the_wheel, Toast.LENGTH_SHORT);
+                //set toast position
+                toast.setGravity(Gravity.TOP, 0,0);
+                toast.show();
             }
         });
     }
 
     @Override
     public void onAnimationStart(Animation animation) {
+        //clear start text + selected cuisine
+        mStartTxt.setText("");
+        mCuisineTxt.setText("");
         mBtnRotation = false;
     }
 
     @Override
     public void onAnimationEnd(Animation animation) {
         selectedCuisine = currentCuisine(360 - (mDegrees % 360));
-        Toast toast = Toast.makeText(this, selectedCuisine, Toast.LENGTH_SHORT);
-        toast.setGravity(49, 0,0);
-        toast.show();
+        mCuisineTxt.setText(selectedCuisine);
         mBtnRotation = true;
     }
 
