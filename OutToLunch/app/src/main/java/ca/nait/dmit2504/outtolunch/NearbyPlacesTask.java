@@ -65,6 +65,6 @@ public class NearbyPlacesTask extends AsyncTask<Object, String, String> {
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
 
             mMap.addMarker(markerOptions);
-    }
+        }
     }
 }

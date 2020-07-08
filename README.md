@@ -53,13 +53,13 @@ After you agree to the terms of service, it should take you to the overview page
 
 Next, create a new project by clicking on "Select a project" in the upper left hand part of the screen and selecting **"New Project"**.
 
-Google Places API will need to be enabled. Click on Marketplace in the left hand pane then search for Places API. Click on **Enable**.
+*Maps SDK for Android* & *Google Places API* will both need to be enabled. Click on Marketplace in the left hand pane then search for Maps SDK for Android. Click on **Enable**. Do the same for the Places API.
 
-Next, we are going to create the two API keys. Click on "Credentials" in the left hand pane, then click on the link on the page, **"Credentials in APIs & Services"**. Click on Create Credential to create a new API key.
+Next, we are going to create the two API keys. Click on "Credentials" in the left hand pane, then click on the link on the page, **"Credentials in APIs & Services"**. Click on Create Credentials to create a new API key.
 
 ![Create Google Credential](/Pictures-For-Notes/create-credential.jpg)
 
-Copy the API key, and for best practices, you should restrict your API key to the API it will be used for to make it secure. This one  will be for Google Maps. Save this key as a string resource in the **strings.xml** file.
+Copy the API key, and for best practices, you should restrict your API key to the API it will be used for to make it secure. This one will be for Google Maps. Save this key as a string resource in the **strings.xml** file.
 
 Create another key for Google Places. Restrict the key and save this key as a string resource too.
 
@@ -167,6 +167,28 @@ Example of request permissions response handler:
     }
 ```
 
+## 4 - Prepare Map
+There's two ways of doing this. You can either add a new OnMapReadyCallback to the getMapAsync method or you can implement the OnMapReadyCallback interface on the activity and then initialize the map in the override method.
+
+1st way:
+```java
+    mSupportMapFragment.getMapAsync(googleMap -> {
+        //when map is ready
+        mGoogleMap = googleMap;
+    });
+```
+
+Alternatively:
+```java
+    public class MainActivity extends AppCompatActivity implements
+        OnMapReadyCallback {
+        @Override
+        public void onMapReady(GoogleMap googleMap) {
+            mMap = googleMap;
+        }
+    }
+```
+
 ## 4 - Get Current Location
 
 ### Step 1) Ensure Google Play services is installed on the device (Recommended)
@@ -237,6 +259,22 @@ There are 3 different types of request urls depending on what kind of data you a
 - Something here
 
 ## 6 - Execute Request Url
+It is best to create tasks to perform the execution of the request which includes: downloading the data, parsing the data and showing the data but you can use whatever method you'd like. I used an async task which still works but they have been deprecated in API level 30. It is now recommended to use other APIs provided by the **java.util.concurrent** package such as *Executor*, *ThreadPoolExecutor* and *FutureTask*. You can read about that [here](https://developer.android.com/reference/android/os/AsyncTask).
+
+## 7 - Showing Data on a Google Map
+After you have succesfully parsed the data, you will want to show the locations on the map. To do this you can add a marker to the map. Position refers to GPS coordinates, the title is the name displayed on the marker when you click on it. You can set a icon color with preset colors using the BitmapDescriptorFactory.
+
+Example of adding a marker to a Google Map:
+```java
+    MarkerOptions markerOptions = new MarkerOptions();
+
+    //set position and title
+    markerOptions.position(latLng);
+    markerOptions.title(placeName);
+    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
+
+    mGoogleMap.addMarker(markerOptions);
+```
 
 ---
 ## Official Documentation & Other Helpful Videos
@@ -260,4 +298,6 @@ There are 3 different types of request urls depending on what kind of data you a
 ### YouTube Video Tutorials
 
 [How to Find Nearby Places on Map in Android Studio](https://youtu.be/pjFcJ6EB8Dg)
+
+[How to Find Nearby Places on Map in Android Studio with Retrofit](https://youtu.be/wKrYU97Wwg4)
 
