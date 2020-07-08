@@ -2,7 +2,6 @@ package ca.nait.dmit2504.outtolunch;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
@@ -11,19 +10,17 @@ import androidx.preference.PreferenceManager;
 import android.Manifest;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.location.Address;
 import android.location.Location;
 
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+//google imports
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -32,7 +29,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.tasks.Task;
@@ -55,9 +51,6 @@ public class MapsActivity extends FragmentActivity implements
     private GoogleApiClient mGoogleApiClient;
     private boolean mLocationPermissionsGranted = false;
     private LocationRequest mLocationRequest;
-    private LocationCallback mLocationCallback;
-    private Location mLastLocation;
-    private Marker mCurrentLocationMarker;
     private FusedLocationProviderClient mFusedLocationProviderClient;
 
     private static final float DEFAULT_ZOOM = 12;
@@ -101,7 +94,7 @@ public class MapsActivity extends FragmentActivity implements
                     dataTransfer[0] = mMap;
                     dataTransfer[1] = url;
                     getNearbyPlacesData.execute(dataTransfer);
-                    Toast.makeText(getApplicationContext(), "Showing nearby open restaurants", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Showing nearby open restaurants", Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -253,12 +246,9 @@ public class MapsActivity extends FragmentActivity implements
     public void onLocationChanged(Location location) {
         mLat = location.getLatitude();
         mLng = location.getLongitude();
-        mLastLocation = location;
 
-        //clear current location marker
-        if (mCurrentLocationMarker != null) {
-            mCurrentLocationMarker.remove();
-        }
+        //clear map
+        mMap.clear();
 
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         //move map
