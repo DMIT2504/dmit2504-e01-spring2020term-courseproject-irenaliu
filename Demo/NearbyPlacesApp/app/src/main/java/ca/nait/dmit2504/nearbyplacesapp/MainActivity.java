@@ -108,6 +108,41 @@ public class MainActivity extends AppCompatActivity implements
         });
     }
 
+    //handle permission request response
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_LOCATION_CODE:
+                //is permission granted?
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    //permission granted
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                        // do location-related task
+                        if(mGoogleApiClient == null) {
+                            buildGoogleApiClient();
+                        }
+                        mLocationPermissionsGranted = true;
+                        mGoogleMap.setMyLocationEnabled(true);
+                    }
+                } else {
+                    //permission denied
+                    Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mGoogleMap = googleMap;
+
+        if (mLocationPermissionsGranted) {
+            //initialize fused location provider client
+            mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+            getCurrentLocation();
+        }
+    }
+
     //================================================================================
     // Custom Methods
     //================================================================================
@@ -134,30 +169,6 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-    //handle permission request response
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case REQUEST_LOCATION_CODE:
-                //is permission granted?
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    //permission granted
-                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                        mLocationPermissionsGranted = true;
-                        // do location-related task
-                        if(mGoogleApiClient == null) {
-                            buildGoogleApiClient();
-                        }
-                        mGoogleMap.setMyLocationEnabled(true);
-                    }
-                } else {
-                    //permission denied
-                    Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
-                }
-                break;
-        }
-    }
-
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -166,17 +177,6 @@ public class MainActivity extends AppCompatActivity implements
                 .build();
 
         mGoogleApiClient.connect();
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mGoogleMap = googleMap;
-
-        if (mLocationPermissionsGranted) {
-            //initialize fused location provider client
-            mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-            getCurrentLocation();
-        }
     }
 
     public void getCurrentLocation() {
