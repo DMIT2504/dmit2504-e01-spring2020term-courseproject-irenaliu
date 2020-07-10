@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.media.AudioManager;
@@ -11,6 +12,8 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.util.Log;
@@ -109,6 +112,8 @@ public class MainActivity extends AppCompatActivity {
                     // Play Music
                     playMusic(uri);
                     break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + requestCode);
             }
         }
     }
@@ -121,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
                 mFileName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
             }
         } finally {
+            assert cursor != null;
             cursor.close();
         }
     }
@@ -156,11 +162,7 @@ public class MainActivity extends AppCompatActivity {
         mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         try {
             mMediaPlayer.setDataSource(getApplicationContext(), uri);
-        } catch (IllegalArgumentException e) {
-            Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
-        } catch (SecurityException e) {
-            Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
-        } catch (IllegalStateException e) {
+        } catch (IllegalArgumentException | SecurityException | IllegalStateException e) {
             Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -212,10 +214,54 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
 
+                    // thread to update times
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            while (mMediaPlayer != null) {
+                                try {
+                                    Message msg = new Message();
+                                    msg.what = mMediaPlayer.getCurrentPosition();
+                                    handler.sendMessage(msg);
+                                    Thread.sleep(1000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    }).start();
+
                 }
             });
         } catch (IllegalStateException e) {
             Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
         }
     }
+
+    //create time label
+    public String createTimeLabel(int time) {
+        String timeLabel = "";
+        int min = time / 1000 / 60;
+        int sec = time / 1000 % 60;
+
+        timeLabel = min + ":";
+        if (sec < 10) timeLabel += "0";
+        timeLabel += sec;
+
+        return timeLabel;
+    }
+
+    private Handler handler = new Handler() {
+        @SuppressLint("HandlerLeak")
+        @Override
+        public void handleMessage(Message msg) {
+        int currentPosition = msg.what;
+        // Update positionBar.
+        mSongSeekbar.setProgress(currentPosition);
+
+        // Update times.
+        mElapsedTxt.setText(createTimeLabel(currentPosition));
+        mRemainingTxt.setText("- " + createTimeLabel(mMediaPlayer.getDuration()-currentPosition));
+        }
+    };
 }
