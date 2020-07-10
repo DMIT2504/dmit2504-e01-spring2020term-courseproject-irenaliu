@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MusicPlayer</string>
+    <string name="proximity_sensor_not_available">Proximity sensor is not available for this device</string>
 </resources>

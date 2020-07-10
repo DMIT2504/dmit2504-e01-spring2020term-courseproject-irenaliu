@@ -5,8 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -37,7 +42,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
     //logger
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -46,6 +51,10 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton mUploadBtn, mPlayBtn, mPauseBtn;
     private SeekBar mSongSeekbar;
     private TextView mElapsedTxt, mRemainingTxt;
+
+    private SensorManager mSensorManager;
+    private Sensor mProximitySensor;
+    private Boolean mProximitySensorAvailable = false;
 
     private MediaPlayer mMediaPlayer = new MediaPlayer();
     private static final int REQUEST_AUDIO_FILE_CODE = 1;
@@ -64,7 +73,59 @@ public class MainActivity extends AppCompatActivity {
         mElapsedTxt = findViewById(R.id.act_main_elapsedtime_txt);
         mRemainingTxt = findViewById(R.id.act_main_remainingtime_txt);
 
+        checkSensorAvailability();
+        registerProximityListener();
         runtimePermission();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if(mProximitySensorAvailable) {
+            mSensorManager.unregisterListener(this);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        registerProximityListener();
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        try {
+            Toast.makeText(this, "Values: " + sensorEvent.values[0], Toast.LENGTH_SHORT).show();
+            if(sensorEvent.values[0] == 0.0) {
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+
+    }
+
+    public void registerProximityListener() {
+        if(mProximitySensorAvailable) {
+            mSensorManager.registerListener(this, mProximitySensor, SensorManager.SENSOR_DELAY_NORMAL);
+        }
+    }
+
+    public void checkSensorAvailability() {
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        assert mSensorManager != null;
+        if(mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY) != null) {
+            mProximitySensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+            mProximitySensorAvailable = true;
+        } else {
+            Toast.makeText(this, R.string.proximity_sensor_not_available, Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void runtimePermission() {
@@ -134,13 +195,13 @@ public class MainActivity extends AppCompatActivity {
     //set background image depending on audio file name
     private void setMusicImage() {
         switch (mFileName) {
-            case "Sailor Moon - Moonlight Densetsu.mp3":
+            case "moonlight_densetsu.mp3":
                 mSongImgView.setImageResource(R.drawable.sailor_moon);
                 break;
-            case "Catch You, Catch Me.mp3":
+            case "catch_you_catch_me.mp3":
                 mSongImgView.setImageResource(R.drawable.cardcaptors);
                 break;
-            case "Spirited Away - Day Of The River.mp3":
+            case "day_of_the_river.mp3":
                 mSongImgView.setImageResource(R.drawable.spirited_away);
                 break;
             default:
