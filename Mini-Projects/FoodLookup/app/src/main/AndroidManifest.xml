@@ -9,8 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FoodFragmentActivity"></activity>
-        <activity android:name=".SearchFoodActivity">
+        <activity android:name=".activities.FoodListActivity"></activity>
+        <activity android:name=".activities.FoodViewPagerActivity" />
+        <activity android:name=".FoodFragmentActivity" />
+        <activity android:name=".activities.SearchFoodActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

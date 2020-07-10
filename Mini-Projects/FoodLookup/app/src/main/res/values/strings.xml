@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">FoodLookup</string>
     <string name="enter_food">enter food to look up</string>
+    <string name="edamam_appId">de647e01</string>
+    <string name="edamam_api_key">2bdd7f4338dcddee4b511a100f4072e7</string>
 </resources>

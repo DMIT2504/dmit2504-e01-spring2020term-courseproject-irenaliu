@@ -1,4 +1,4 @@
-package ca.nait.dmit2504.foodlookup;
+package ca.nait.dmit2504.foodlookup.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
+
+import ca.nait.dmit2504.foodlookup.FoodFragmentActivity;
+import ca.nait.dmit2504.foodlookup.R;
 
 public class SearchFoodActivity extends AppCompatActivity {
 
@@ -22,15 +25,12 @@ public class SearchFoodActivity extends AppCompatActivity {
         mFoodEdit = findViewById(R.id.act_search_food_edit);
         mFindBtn = findViewById(R.id.act_search_find_btn);
 
-        mFindBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String foodQuery = mFoodEdit.getText().toString();
-                if(!foodQuery.equals("")) {
-                    Intent foodIntent = new Intent(getApplicationContext(), FoodFragmentActivity.class);
-                    foodIntent.putExtra("food", foodQuery);
-                    startActivity(foodIntent);
-                }
+        mFindBtn.setOnClickListener(view -> {
+            String foodQuery = mFoodEdit.getText().toString();
+            if(!foodQuery.equals("")) {
+                Intent foodIntent = new Intent(getApplicationContext(), FoodListActivity.class);
+                foodIntent.putExtra("food", foodQuery);
+                startActivity(foodIntent);
             }
         });
     }
