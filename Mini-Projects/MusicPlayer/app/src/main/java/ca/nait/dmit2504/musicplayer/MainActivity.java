@@ -14,7 +14,9 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -36,8 +38,9 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private ImageView mSongImgView;
+    private ImageButton mUploadBtn;
     private MediaPlayer mMediaPlayer;
-    private static final int REQUEST_AUDIO_FILES_GT19 = 99;
+    private static final int REQUEST_AUDIO_FILE_CODE = 1;
     private String mFileName;
 
     @Override
@@ -45,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mUploadBtn = findViewById(R.id.act_main_upload_btn);
         mSongImgView = findViewById(R.id.act_main_song_img);
 
         runtimePermission();
@@ -56,10 +60,15 @@ public class MainActivity extends AppCompatActivity {
                 .withListener(new PermissionListener() {
                     @Override
                     public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
-                        Intent mUploadFileIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                        mUploadFileIntent.addCategory(Intent.CATEGORY_OPENABLE);
-                        mUploadFileIntent.setType("audio/*");
-                        startActivityForResult(Intent.createChooser(mUploadFileIntent, "Upload"), REQUEST_AUDIO_FILES_GT19);
+                        mUploadBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent uploadFileIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                                uploadFileIntent.addCategory(Intent.CATEGORY_OPENABLE);
+                                uploadFileIntent.setType("audio/*");
+                                startActivityForResult(Intent.createChooser(uploadFileIntent, "Select an audio file"), REQUEST_AUDIO_FILE_CODE);
+                            }
+                        });
                     }
 
                     @Override
