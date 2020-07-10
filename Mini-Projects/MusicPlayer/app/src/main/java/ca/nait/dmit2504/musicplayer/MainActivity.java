@@ -173,6 +173,9 @@ public class MainActivity extends AppCompatActivity {
             mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mediaPlayer) {
+                    //set on loop
+                    mMediaPlayer.setLooping(true);
+
                     //play music
                     mMediaPlayer.start();
                     mPauseBtn.setVisibility(View.VISIBLE);
@@ -230,7 +233,6 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                     }).start();
-
                 }
             });
         } catch (IllegalStateException e) {
@@ -251,8 +253,9 @@ public class MainActivity extends AppCompatActivity {
         return timeLabel;
     }
 
+    @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
-        @SuppressLint("HandlerLeak")
+        @SuppressLint("SetTextI18n")
         @Override
         public void handleMessage(Message msg) {
         int currentPosition = msg.what;
