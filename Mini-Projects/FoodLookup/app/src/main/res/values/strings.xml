@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">FoodLookup</string>
+    <string name="enter_food">enter food to look up</string>
+</resources>
