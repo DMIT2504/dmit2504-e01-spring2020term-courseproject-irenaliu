@@ -8,7 +8,7 @@ This music player application is developed using the tutorials/ example code fro
 ---
 ## Concepts Learned
 1. From Adrian's SoundBoardApp
-    - How to uploading an audio file from internal storage by starting a new intent
+    - How to upload an audio file from the device's internal storage
     - Using the android mediaplayer & preparing a mediaplayer asynchronously
 2. From Lucas's AudioEditorApp
     - Using the android MediaPlayer & syncing it to a seekbar
