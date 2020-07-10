@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ImageView mSongImgView;
     private ImageButton mUploadBtn;
-    private MediaPlayer mMediaPlayer;
+    private MediaPlayer mMediaPlayer = new MediaPlayer();
     private static final int REQUEST_AUDIO_FILE_CODE = 1;
     private String mFileName;
 
@@ -87,45 +87,19 @@ public class MainActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            Uri uri = data.getData();
-            getFileName(uri);
-            Log.i(TAG, mFileName);
+            switch(requestCode) {
+                case REQUEST_AUDIO_FILE_CODE:
+                    Uri uri = data.getData();
+                    getFileName(uri);
+                    Log.i(TAG, mFileName);
 
-            // Set background depending on song chosen
-            switch (mFileName) {
-                case "Sailor Moon - Moonlight Densetsu.mp3":
-                    mSongImgView.setImageResource(R.drawable.sailor_moon);
-                    break;
-                case "Catch You, Catch Me.mp3":
-                    mSongImgView.setImageResource(R.drawable.cardcaptors);
-                    break;
-                case "Spirited Away - Day Of The River.mp3":
-                    mSongImgView.setImageResource(R.drawable.spirited_away);
-                    break;
-            }
+                    // Set background depending on song chosen
+                    setMusicImage();
 
-            // Set audio properties then save audio to list
-            mMediaPlayer = new MediaPlayer();
-            mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            try {
-                mMediaPlayer.setDataSource(getApplicationContext(), uri);
-            } catch (IllegalArgumentException e) {
-                Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
-            } catch (SecurityException e) {
-                Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
-            } catch (IllegalStateException e) {
-                Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
-            } catch (IOException e) {
-                e.printStackTrace();
+                    // Play Music
+                    playMusic(uri);
+                    break;
             }
-            try {
-                mMediaPlayer.prepare();
-            } catch (IllegalStateException e) {
-                Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
-            } catch (IOException e) {
-                Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
-            }
-            mMediaPlayer.start();
         }
     }
 
@@ -138,6 +112,60 @@ public class MainActivity extends AppCompatActivity {
             }
         } finally {
             cursor.close();
+        }
+    }
+
+    //set background image depending on audio file name
+    private void setMusicImage() {
+        switch (mFileName) {
+            case "Sailor Moon - Moonlight Densetsu.mp3":
+                mSongImgView.setImageResource(R.drawable.sailor_moon);
+                break;
+            case "Catch You, Catch Me.mp3":
+                mSongImgView.setImageResource(R.drawable.cardcaptors);
+                break;
+            case "Spirited Away - Day Of The River.mp3":
+                mSongImgView.setImageResource(R.drawable.spirited_away);
+                break;
+            default:
+                Toast.makeText(getApplicationContext(), "No music image available", Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
+
+    private void playMusic(Uri uri) {
+        //check if music is already playing
+        if(mMediaPlayer.isPlaying()) {
+            //music is playing already
+            mMediaPlayer.stop();
+            mMediaPlayer.reset();
+        }
+
+        //set data source
+        mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        try {
+            mMediaPlayer.setDataSource(getApplicationContext(), uri);
+        } catch (IllegalArgumentException e) {
+            Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
+        } catch (SecurityException e) {
+            Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
+        } catch (IllegalStateException e) {
+            Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //prepare music player
+        try {
+            mMediaPlayer.prepareAsync();
+            mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mediaPlayer) {
+                    //play music
+                    mMediaPlayer.start();
+                }
+            });
+        } catch (IllegalStateException e) {
+            Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
         }
     }
 }
