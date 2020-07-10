@@ -19,6 +19,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.karumi.dexter.Dexter;
@@ -38,7 +40,10 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private ImageView mSongImgView;
-    private ImageButton mUploadBtn;
+    private ImageButton mUploadBtn, mPlayBtn, mPauseBtn;
+    private SeekBar mSongSeekbar;
+    private TextView mElapsedTxt, mRemainingTxt;
+
     private MediaPlayer mMediaPlayer = new MediaPlayer();
     private static final int REQUEST_AUDIO_FILE_CODE = 1;
     private String mFileName;
@@ -50,6 +55,11 @@ public class MainActivity extends AppCompatActivity {
 
         mUploadBtn = findViewById(R.id.act_main_upload_btn);
         mSongImgView = findViewById(R.id.act_main_song_img);
+        mPlayBtn = findViewById(R.id.act_main_play_btn);
+        mPauseBtn = findViewById(R.id.act_main_pause_btn);
+        mSongSeekbar = findViewById(R.id.act_main_song_seekbar);
+        mElapsedTxt = findViewById(R.id.act_main_elapsedtime_txt);
+        mRemainingTxt = findViewById(R.id.act_main_remainingtime_txt);
 
         runtimePermission();
     }
@@ -129,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             default:
                 Toast.makeText(getApplicationContext(), "No music image available", Toast.LENGTH_SHORT).show();
+                mSongImgView.setImageResource(R.drawable.default_gradient);
                 break;
         }
     }
@@ -154,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //prepare music player
+        //prepare music player asynchronously
         try {
             mMediaPlayer.prepareAsync();
             mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
@@ -162,6 +173,45 @@ public class MainActivity extends AppCompatActivity {
                 public void onPrepared(MediaPlayer mediaPlayer) {
                     //play music
                     mMediaPlayer.start();
+                    mPauseBtn.setVisibility(View.VISIBLE);
+                    mPlayBtn.setVisibility(View.GONE);
+
+                    mPauseBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            mMediaPlayer.pause();
+                            mPauseBtn.setVisibility(View.GONE);
+                            mPlayBtn.setVisibility(View.VISIBLE);
+                        }
+                    });
+
+                    mPlayBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            mMediaPlayer.start();
+                            mPauseBtn.setVisibility(View.VISIBLE);
+                            mPlayBtn.setVisibility(View.GONE);
+                        }
+                    });
+
+                    // Set Seekbar
+                    mSongSeekbar.setMax(mMediaPlayer.getDuration());
+                    mSongSeekbar.setOnSeekBarChangeListener( new SeekBar.OnSeekBarChangeListener() {
+                        @Override
+                        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                            if (fromUser) {
+                                mMediaPlayer.seekTo(progress);
+                                mSongSeekbar.setProgress(progress);
+                            }
+                        }
+                        @Override
+                        public void onStartTrackingTouch(SeekBar seekBar) {
+                        }
+                        @Override
+                        public void onStopTrackingTouch(SeekBar seekBar) {
+                        }
+                    });
+
                 }
             });
         } catch (IllegalStateException e) {
