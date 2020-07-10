@@ -97,9 +97,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         try {
-            Toast.makeText(this, "Values: " + sensorEvent.values[0], Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Values: " + sensorEvent.values[0], Toast.LENGTH_SHORT).show();
             if(sensorEvent.values[0] == 0.0) {
-
+                if(mMediaPlayer.isPlaying()){
+                    mMediaPlayer.pause();
+                    mPauseBtn.setVisibility(View.GONE);
+                    mPlayBtn.setVisibility(View.VISIBLE);
+                } else if (sensorEvent.values[0] == 0.0) {
+                    mMediaPlayer.start();
+                    mPauseBtn.setVisibility(View.VISIBLE);
+                    mPlayBtn.setVisibility(View.GONE);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
