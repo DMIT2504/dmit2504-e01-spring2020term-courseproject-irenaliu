@@ -12,10 +12,10 @@ public class JsonParser {
     private HashMap<String, String> parseJsonObject(JSONObject jsonObject) {
         //initialize hash map
         HashMap<String, String> dataList = new HashMap<>();
-        String name = "-NA-";
-        String price_level = "-NA-";
-        String rating = "-NA-";
-        String user_ratings_total = "-NA-";
+        String name = "-N/A-";
+        String price_level = "-N/A-";
+        String rating = "-N/A-";
+        String user_ratings_total = "-N/A-";
         String open_now = "";
         String latitude = "";
         String longitude = "";

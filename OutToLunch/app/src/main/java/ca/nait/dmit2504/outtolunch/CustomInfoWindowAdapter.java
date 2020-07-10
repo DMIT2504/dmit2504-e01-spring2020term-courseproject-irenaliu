@@ -27,8 +27,13 @@ public class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
         if (!title.equals("")) {
             titleTxt.setText(title);
         }
-        if (!snippet.equals("")) {
-            snippetTxt.setText(snippet);
+
+        if(title.equals("Current Location")) {
+            snippetTxt.setText("");
+        } else {
+            if (!snippet.equals("")) {
+                snippetTxt.setText(snippet);
+            }
         }
     }
 
