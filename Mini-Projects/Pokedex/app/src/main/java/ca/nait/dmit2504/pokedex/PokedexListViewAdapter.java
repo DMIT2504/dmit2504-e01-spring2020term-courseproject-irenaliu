@@ -45,17 +45,17 @@ public class PokedexListViewAdapter extends BaseAdapter {
         //get and set pokemon item
         TextView nameTxt = rowView.findViewById(R.id.listview_pokemon_name_txt);
         TextView numTxt = rowView.findViewById(R.id.listview_pokemon_num_txt);
-        ImageView spriteView = rowView.findViewById(R.id.listview_pokemon_img);
+        ImageView pokemonImg = rowView.findViewById(R.id.listview_pokemon_img);
 
         nameTxt.setText(mResults.get(position).getName());
-        numTxt.setText("# " + (position + 1));
+        numTxt.setText("#" + (position + 1));
 
         //load image
         Picasso.get()
                 .load(String.format(URL_FORMAT, position + 1))
                 .resize(500, 500)
                 .centerCrop()
-                .into(spriteView);
+                .into(pokemonImg);
 
         return rowView;
     }
