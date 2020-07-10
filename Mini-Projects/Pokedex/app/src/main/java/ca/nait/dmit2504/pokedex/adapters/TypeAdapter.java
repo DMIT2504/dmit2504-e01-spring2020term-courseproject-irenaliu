@@ -6,10 +6,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.pokeapi.Pokemon;
-import com.pokeapi.Type;
-
 import java.util.List;
+
+import ca.nait.dmit2504.pokedex.R;
+import ca.nait.dmit2504.pokedex.pokeapi.Pokemon;
+import ca.nait.dmit2504.pokedex.pokeapi.Type;
 
 public class TypeAdapter extends BaseAdapter {
 

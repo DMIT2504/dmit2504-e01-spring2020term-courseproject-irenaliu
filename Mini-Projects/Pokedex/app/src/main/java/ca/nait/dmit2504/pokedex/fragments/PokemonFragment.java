@@ -12,9 +12,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.pokeapi.Pokemon;
 import com.squareup.picasso.Picasso;
 
+import ca.nait.dmit2504.pokedex.R;
+import ca.nait.dmit2504.pokedex.adapters.TypeAdapter;
+import ca.nait.dmit2504.pokedex.pokeapi.Pokemon;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

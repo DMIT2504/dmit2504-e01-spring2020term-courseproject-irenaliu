@@ -6,10 +6,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.pokeapi.Ability;
-import com.pokeapi.Pokemon;
-
 import java.util.List;
+
+import ca.nait.dmit2504.pokedex.R;
+import ca.nait.dmit2504.pokedex.pokeapi.Ability;
+import ca.nait.dmit2504.pokedex.pokeapi.Pokemon;
 
 public class AbilitiesAdapter extends BaseAdapter {
 

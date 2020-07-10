@@ -22,10 +22,10 @@ public class PokemonViewPagerActivity extends BaseActivity {
 
         //get pokemon name
         mPokemonName = getIntent().getStringExtra("NAME");
-        mTabViews = findViewById(R.id.activity_pokemon_view_pager_tabLayout);
 
         //get views
         mPokemonViewPager = findViewById(R.id.activity_pokemon_view_pager_viewPager);
+        mTabViews = findViewById(R.id.activity_pokemon_view_pager_tabLayout);
 
         //set views
         mPokemonFragmentStateAdapter = new PokemonFragmentStateAdapter(this, mPokemonName);

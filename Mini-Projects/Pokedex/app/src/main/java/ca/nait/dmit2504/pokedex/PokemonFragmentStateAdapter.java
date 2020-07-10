@@ -25,6 +25,7 @@ public class PokemonFragmentStateAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         Fragment fragment;
+        //navigate between fragments
         switch (position) {
             case 1:
                 fragment = new MovesFragment();
@@ -44,7 +45,6 @@ public class PokemonFragmentStateAdapter extends FragmentStateAdapter {
         args.putString("NAME", mPokemonName);
         fragment.setArguments(args);
         return fragment;
-
     }
 
     //returns number of tabs

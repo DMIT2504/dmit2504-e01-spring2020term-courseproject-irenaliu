@@ -11,8 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.pokeapi.Pokemon;
-
+import ca.nait.dmit2504.pokedex.R;
+import ca.nait.dmit2504.pokedex.adapters.StatsAdapter;
+import ca.nait.dmit2504.pokedex.pokeapi.Pokemon;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
