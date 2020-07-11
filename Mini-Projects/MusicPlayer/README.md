@@ -1,7 +1,7 @@
 # MusicPlayer - Mini Project #1
 > By Irena Liu
 
-> Last updated: July 8th, 2020
+> Last updated: July 9th, 2020
 
 This music player application is developed using the tutorials/ example code from Adrian's SoundBoardApp, Lucas's AudioEditorApp and Sham's SensorsApp.
 
