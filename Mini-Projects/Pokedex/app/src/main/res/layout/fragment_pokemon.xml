@@ -26,12 +26,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginTop="8dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="8dp">
+                android:padding="8dp"
+                android:background="@color/colorPrimaryDark">
 
                 <TextView
                     android:id="@+id/fragment_pokemon_number"
@@ -43,6 +45,7 @@
                     android:textAlignment="textEnd"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textSize="24sp"
+                    android:textColor="#ffffff"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/fragment_pokemon_name"
                     app:layout_constraintStart_toStartOf="parent"
@@ -60,6 +63,7 @@
                     android:textAllCaps="true"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textSize="24sp"
+                    android:textColor="@color/colorAccent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/fragment_pokemon_number"
@@ -118,15 +122,14 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=" "
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Pokemon Type"
+            android:layout_marginTop="16dp"
+            android:background="@color/colorPrimaryDark"
+            android:paddingTop="8dp"
             android:paddingBottom="8dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            android:text="Pokemon Type"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/colorAccent" />
 
         <ListView
             android:id="@+id/fragment_pokemon_listView"
@@ -134,5 +137,4 @@
             android:layout_height="match_parent" />
 
     </LinearLayout>
-
 </FrameLayout>
