@@ -1,4 +1,4 @@
-package ca.nait.dmit2504.pokedex;
+package ca.nait.dmit2504.pokedex.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 
 import com.squareup.picasso.Picasso;
 
+import ca.nait.dmit2504.pokedex.R;
 import ca.pokeapi.Pokemon;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -90,9 +91,9 @@ public class PokemonFragment extends BaseFragment {
                             .into(mSpriteView);
 
                     mNameTextView.setText(mPokemon.getName());
-                    mNumberTextView.setText(mPokemon.getId().toString());
-                    mHeightTextView.setText(String.valueOf((double) mPokemon.getHeight() / 10));
-                    mWeightTextView.setText(String.valueOf((double) mPokemon.getWeight() / 10));
+                    mNumberTextView.setText("#" + mPokemon.getId().toString());
+                    mHeightTextView.setText(String.valueOf((double) mPokemon.getHeight() / 10) + "m");
+                    mWeightTextView.setText(String.valueOf((double) mPokemon.getWeight() / 10) + "kg");
 
 
                     TypeAdapter adapter = new TypeAdapter(mPokemon);

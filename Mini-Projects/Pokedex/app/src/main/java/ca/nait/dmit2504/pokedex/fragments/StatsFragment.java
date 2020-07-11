@@ -1,4 +1,4 @@
-package ca.nait.dmit2504.pokedex;
+package ca.nait.dmit2504.pokedex.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 
+import ca.nait.dmit2504.pokedex.R;
 import ca.pokeapi.Pokemon;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,10 +20,10 @@ import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MovesFragment#newInstance} factory method to
+ * Use the {@link StatsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MovesFragment extends BaseFragment {
+public class StatsFragment extends BaseFragment {
 
     private static final String NAME = "NAME";
 
@@ -30,12 +31,12 @@ public class MovesFragment extends BaseFragment {
     protected Pokemon mPokemon;
     private ListView mListView;
 
-    public MovesFragment() {
+    public StatsFragment() {
         // Required empty public constructor
     }
 
-    public static MovesFragment newInstance(String pokemonName) {
-        MovesFragment fragment = new MovesFragment();
+    public static StatsFragment newInstance(String pokemonName) {
+        StatsFragment fragment = new StatsFragment();
         Bundle args = new Bundle();
         args.putString(NAME, pokemonName);
         fragment.setArguments(args);
@@ -45,7 +46,6 @@ public class MovesFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         mPokemonName = getArguments().getString(NAME);
     }
 
@@ -53,14 +53,14 @@ public class MovesFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mListView = getView().findViewById(R.id.fragment_moves_listView);
+        mListView = getView().findViewById(R.id.fragment_stats_listView);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_moves, container, false);
+        return inflater.inflate(R.layout.fragment_stats, container, false);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class MovesFragment extends BaseFragment {
                 if (response.isSuccessful()) {
                     mPokemon = response.body();
 
-                    MovesAdapter adapter = new MovesAdapter(mPokemon);
+                    StatsAdapter adapter = new StatsAdapter(mPokemon);
                     mListView.setAdapter(adapter);
                 } else {
                     Toast.makeText(getContext(), "Pokemon Fetch Unsuccessful", Toast.LENGTH_SHORT).show();

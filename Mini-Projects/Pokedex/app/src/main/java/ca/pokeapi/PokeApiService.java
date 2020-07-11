@@ -1,4 +1,4 @@
-package ca.nait.dmit2504.pokedex;
+package ca.pokeapi;
 
 import ca.pokeapi.PokedexReturn;
 import ca.pokeapi.Pokemon;

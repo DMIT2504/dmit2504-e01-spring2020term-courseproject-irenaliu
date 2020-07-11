@@ -7,6 +7,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import ca.nait.dmit2504.pokedex.fragments.AbilitiesFragment;
+import ca.nait.dmit2504.pokedex.fragments.MovesFragment;
+import ca.nait.dmit2504.pokedex.fragments.PokemonFragment;
+import ca.nait.dmit2504.pokedex.fragments.StatsFragment;
+
 public class PokemonFragmentStateAdapter extends FragmentStateAdapter {
 
     public String mPokemonName;
@@ -25,12 +30,12 @@ public class PokemonFragmentStateAdapter extends FragmentStateAdapter {
             case 1:
                 fragment = new MovesFragment();
                 break;
-//            case 2:
-//                fragment = new AbilitiesFragment();
-//                break;
-//            case 3:
-//                fragment = new StatsFragment();
-//                break;
+            case 2:
+                fragment = new AbilitiesFragment();
+                break;
+            case 3:
+                fragment = new StatsFragment();
+                break;
             default:
                 fragment = new PokemonFragment();
                 break;

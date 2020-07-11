@@ -1,4 +1,4 @@
-package ca.nait.dmit2504.pokedex;
+package ca.nait.dmit2504.pokedex.fragments;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import ca.nait.dmit2504.pokedex.R;
 import ca.pokeapi.Pokemon;
 import ca.pokeapi.Type;
 

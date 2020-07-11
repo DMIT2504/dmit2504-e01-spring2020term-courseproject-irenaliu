@@ -1,10 +1,11 @@
-package ca.nait.dmit2504.pokedex;
+package ca.nait.dmit2504.pokedex.fragments;
 
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import ca.pokeapi.PokeApiService;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 

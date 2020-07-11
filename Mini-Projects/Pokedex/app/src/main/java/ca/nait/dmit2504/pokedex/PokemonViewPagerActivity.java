@@ -7,6 +7,9 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+/**
+ *  This class manages the pokemon tab views
+ * **/
 public class PokemonViewPagerActivity extends BaseActivity {
 
     private String mPokemonName;
