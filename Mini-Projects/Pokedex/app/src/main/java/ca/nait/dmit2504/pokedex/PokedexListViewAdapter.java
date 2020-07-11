@@ -11,7 +11,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-import ca.nait.dmit2504.pokedex.pokeapi.Result;
+import ca.pokeapi.Result;
 
 public class PokedexListViewAdapter extends BaseAdapter {
 

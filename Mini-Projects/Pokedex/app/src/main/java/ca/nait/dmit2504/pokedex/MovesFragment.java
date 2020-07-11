@@ -1,4 +1,4 @@
-package ca.nait.dmit2504.pokedex.fragments;
+package ca.nait.dmit2504.pokedex;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,9 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import ca.nait.dmit2504.pokedex.R;
-import ca.nait.dmit2504.pokedex.adapters.MovesAdapter;
-import ca.nait.dmit2504.pokedex.pokeapi.Pokemon;
+
+import ca.pokeapi.Pokemon;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

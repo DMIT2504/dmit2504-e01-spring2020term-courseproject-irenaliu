@@ -1,5 +1,7 @@
-package ca.nait.dmit2504.pokedex.pokeapi;
+package ca.nait.dmit2504.pokedex;
 
+import ca.pokeapi.PokedexReturn;
+import ca.pokeapi.Pokemon;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;

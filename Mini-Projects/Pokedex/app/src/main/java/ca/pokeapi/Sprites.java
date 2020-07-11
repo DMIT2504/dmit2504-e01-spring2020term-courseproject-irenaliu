@@ -1,5 +1,5 @@
 
-package ca.nait.dmit2504.pokedex.pokeapi;
+package ca.pokeapi;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

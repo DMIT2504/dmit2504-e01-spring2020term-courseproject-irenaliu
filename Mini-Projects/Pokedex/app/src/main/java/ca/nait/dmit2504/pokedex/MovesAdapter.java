@@ -1,4 +1,4 @@
-package ca.nait.dmit2504.pokedex.adapters;
+package ca.nait.dmit2504.pokedex;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -6,11 +6,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+
 import java.util.List;
 
-import ca.nait.dmit2504.pokedex.R;
-import ca.nait.dmit2504.pokedex.pokeapi.Move;
-import ca.nait.dmit2504.pokedex.pokeapi.Pokemon;
+import ca.pokeapi.Move;
+import ca.pokeapi.Pokemon;
 
 public class MovesAdapter extends BaseAdapter {
 

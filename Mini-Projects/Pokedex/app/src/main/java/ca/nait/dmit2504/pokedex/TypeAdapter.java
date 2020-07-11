@@ -1,4 +1,4 @@
-package ca.nait.dmit2504.pokedex.adapters;
+package ca.nait.dmit2504.pokedex;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,9 +8,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import ca.nait.dmit2504.pokedex.R;
-import ca.nait.dmit2504.pokedex.pokeapi.Pokemon;
-import ca.nait.dmit2504.pokedex.pokeapi.Type;
+import ca.pokeapi.Pokemon;
+import ca.pokeapi.Type;
 
 public class TypeAdapter extends BaseAdapter {
 
